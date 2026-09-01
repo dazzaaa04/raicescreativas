@@ -1,0 +1,379 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Raíces Creativas</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<header>
+
+<nav class="navbar">
+
+<div class="logo">
+<img src="/Users/arianabarrosdaniels/vs_projekts/raicescreativas/public/raicescreativas.png">
+</div>
+
+<ul class="nav-links">
+<li><a href="#">Inicio</a></li>
+<li><a href="#">Productos</a></li>
+<li><a href="#">Nosotros</a></li>
+<li><a href="#">Galería</a></li>
+<li><a href="#">Contacto</a></li>
+</ul>
+
+</nav>
+
+</header>
+
+<section class="hero">
+
+<div class="hero-left">
+
+<p class="subtitle">
+Empresa familiar de diseño e impresión 3D
+</p>
+
+<h1>
+Diseño que nace de las raíces.
+</h1>
+
+<p class="description">
+Creamos piezas decorativas, llaveros, regalos personalizados
+y objetos únicos impresos en 3D.
+</p>
+
+<a href="#" class="btn">
+Ver catálogo
+</a>
+
+</div>
+
+<div class="hero-right">
+
+<div class="shape"></div>
+
+</div>
+
+</section>
+
+<section class="about">
+
+<div class="about-card">
+
+<h2>Nuestra historia</h2>
+
+<p>
+Raíces Creativas nace como un proyecto familiar
+dedicado a transformar ideas en piezas únicas,
+mezclando creatividad, tecnología y artesanía.
+</p>
+
+</div>
+
+</section>
+
+<section class="categories">
+
+<h2>Categorías</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Decoración</h3>
+</div>
+
+<div class="card">
+<h3>Llaveros</h3>
+</div>
+
+<div class="card">
+<h3>Impresión 3D</h3>
+</div>
+
+<div class="card">
+<h3>Personalizados</h3>
+</div>
+
+</div>
+
+</section>
+
+<section class="featured">
+
+<div class="featured-left">
+<h2>Pieza destacada</h2>
+
+<p>
+Diseños exclusivos creados para espacios modernos.
+</p>
+</div>
+
+<div class="featured-right">
+
+</div>
+
+</section>
+
+<section class="gallery">
+
+<h2>Galería</h2>
+
+<div class="gallery-grid">
+
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+
+</div>
+
+</section>
+
+<footer>
+
+<h3>Raíces Creativas</h3>
+
+<p>
+Diseño • Decoración • Impresión 3D
+</p>
+
+</footer>
+
+</body>
+</html>
+
+<style>
+:root{
+--green:#324b20;
+--terracotta:#b64f36;
+--white:#ffffff;
+--black:#111111;
+--light:#f8f7f5;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:var(--white);
+color:var(--black);
+}
+
+h1,h2,h3{
+font-family:'Cormorant Garamond',serif;
+font-weight:600;
+}
+
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:30px 8%;
+}
+
+.logo{
+font-size:2rem;
+font-family:'Cormorant Garamond',serif;
+color:var(--green);
+}
+
+.nav-links{
+display:flex;
+gap:40px;
+list-style:none;
+}
+
+.nav-links a{
+text-decoration:none;
+color:var(--black);
+font-weight:500;
+}
+
+.hero{
+min-height:90vh;
+display:grid;
+grid-template-columns:1fr 1fr;
+align-items:center;
+padding:0 8%;
+}
+
+.subtitle{
+color:var(--terracotta);
+margin-bottom:20px;
+text-transform:uppercase;
+letter-spacing:3px;
+}
+
+.hero h1{
+font-size:6rem;
+line-height:0.9;
+max-width:600px;
+margin-bottom:30px;
+}
+
+.description{
+max-width:500px;
+line-height:1.8;
+margin-bottom:40px;
+}
+
+.btn{
+display:inline-block;
+padding:16px 35px;
+background:var(--green);
+color:white;
+text-decoration:none;
+border-radius:50px;
+}
+
+.hero-right{
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.shape{
+width:420px;
+height:520px;
+background:var(--terracotta);
+border-radius:250px;
+}
+
+.about{
+padding:120px 8%;
+background:var(--light);
+}
+
+.about-card{
+max-width:700px;
+}
+
+.about h2{
+font-size:4rem;
+margin-bottom:20px;
+color:var(--green);
+}
+
+.categories{
+padding:120px 8%;
+}
+
+.categories h2{
+font-size:4rem;
+margin-bottom:50px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:30px;
+}
+
+.card{
+height:250px;
+background:var(--green);
+border-radius:35px;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+font-size:1.5rem;
+}
+
+.featured{
+display:grid;
+grid-template-columns:1fr 1fr;
+padding:120px 8%;
+background:#faf8f6;
+}
+
+.featured h2{
+font-size:4rem;
+margin-bottom:20px;
+}
+
+.featured-right{
+height:500px;
+background:var(--terracotta);
+border-radius:50px;
+}
+
+.gallery{
+padding:120px 8%;
+}
+
+.gallery h2{
+font-size:4rem;
+margin-bottom:60px;
+}
+
+.gallery-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
+}
+
+.gallery-grid div{
+height:350px;
+background:var(--green);
+border-radius:40px;
+}
+
+footer{
+padding:80px;
+background:var(--green);
+color:white;
+text-align:center;
+}
+
+footer h3{
+font-size:3rem;
+margin-bottom:20px;
+}
+
+@media(max-width:900px){
+
+.hero,
+.featured{
+grid-template-columns:1fr;
+gap:50px;
+}
+
+.hero h1{
+font-size:4rem;
+}
+
+.grid{
+grid-template-columns:1fr 1fr;
+}
+
+.gallery-grid{
+grid-template-columns:1fr;
+}
+
+}
+</style>
