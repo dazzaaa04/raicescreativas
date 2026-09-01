@@ -1,0 +1,56 @@
+---
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import { SITE_TITLE } from '../../../consts';
+import { getDecoItems, getDecoThemes } from '../../../utils/deco';
+import { formatFolderName } from '../../../utils/folderProducts';
+
+export function getStaticPaths() {
+	return getDecoThemes().map((theme) => ({
+		params: { theme: theme.slug },
+		props: { theme, items: getDecoItems(theme.slug) },
+	}));
+}
+
+const { theme, items } = Astro.props;
+const themeTitle = formatFolderName(theme.slug);
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead
+			title={`${themeTitle} | Decoración 3D | ${SITE_TITLE}`}
+			description={`Decoración 3D — ${themeTitle}`}
+		/>
+	</head>
+
+	<body>
+		<Header />
+
+		<main>
+			<div class="catalog">
+				<a href="/categoria/decoracion-3d/" class="catalog-back">← Decoración 3D</a>
+				<h1 class="catalog-title">{themeTitle}</h1>
+
+				{items.length > 0 ? (
+					<div class="product-grid">
+						{items.map((item) => (
+							<a href={`/deco/${theme.slug}/${item.num}/`} class="product-card">
+								<div class="product-card__image">
+									<img src={item.image} alt={item.title} loading="lazy" />
+								</div>
+								<h2 class="product-card__title">{item.title}</h2>
+							</a>
+						))}
+					</div>
+				) : (
+					<p class="empty-msg">Pronto subiremos piezas en esta colección.</p>
+				)}
+			</div>
+		</main>
+
+		<Footer />
+	</body>
+</html>

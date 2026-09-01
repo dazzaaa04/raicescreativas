@@ -1,0 +1,51 @@
+---
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import { SITE_TITLE } from '../../../consts';
+import { getDecoItems, getDecoThemes } from '../../../utils/deco';
+import { formatFolderName } from '../../../utils/folderProducts';
+
+export function getStaticPaths() {
+	const paths = [];
+
+	for (const theme of getDecoThemes()) {
+		for (const item of getDecoItems(theme.slug)) {
+			paths.push({
+				params: { theme: theme.slug, num: item.num },
+				props: { item, themeSlug: theme.slug },
+			});
+		}
+	}
+
+	return paths;
+}
+
+const { item, themeSlug } = Astro.props;
+const themeTitle = formatFolderName(themeSlug);
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead
+			title={`${item.title} | ${SITE_TITLE}`}
+			description={`${item.title} — decoración 3D`}
+			image={item.image}
+		/>
+	</head>
+
+	<body>
+		<Header />
+
+		<main>
+			<div class="detail-page">
+				<img src={item.image} alt={item.title} class="detail-page__photo" />
+				<h1 class="detail-page__title">{item.title}</h1>
+				<a href={`/deco/${themeSlug}/`} class="detail-page__back">← Volver a {themeTitle}</a>
+			</div>
+		</main>
+
+		<Footer />
+	</body>
+</html>

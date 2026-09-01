@@ -1,0 +1,143 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+import { SITE_TITLE } from '../../consts';
+import { CATEGORIES } from '../../utils/categories';
+import { getLlaveros } from '../../utils/llaveros';
+import { getDecoThemes } from '../../utils/deco';
+import { getPlacas } from '../../utils/placas';
+
+export async function getStaticPaths() {
+	const products = await getCollection('blog');
+	const llaveros = getLlaveros();
+	const decoThemes = getDecoThemes();
+	const placas = getPlacas();
+
+	return CATEGORIES.map((cat) => {
+		if (cat.slug === 'llaveros') {
+			return {
+				params: { slug: cat.slug },
+				props: { category: cat, llaveros, decoThemes: [], placas: [], products: [] },
+			};
+		}
+
+		if (cat.slug === 'decoracion-3d') {
+			return {
+				params: { slug: cat.slug },
+				props: { category: cat, llaveros: [], decoThemes, placas: [], products: [] },
+			};
+		}
+
+		if (cat.slug === 'placas-para-mascotas') {
+			return {
+				params: { slug: cat.slug },
+				props: { category: cat, llaveros: [], decoThemes: [], placas, products: [] },
+			};
+		}
+
+		return {
+			params: { slug: cat.slug },
+			props: {
+				category: cat,
+				llaveros: [],
+				decoThemes: [],
+				placas: [],
+				products: products
+					.filter((p) => p.data.category === cat.title)
+					.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+			},
+		};
+	});
+}
+
+const { category, products, llaveros, decoThemes, placas } = Astro.props;
+
+const hasItems =
+	category.slug === 'llaveros'
+		? llaveros.length > 0
+		: category.slug === 'decoracion-3d'
+			? decoThemes.length > 0
+			: category.slug === 'placas-para-mascotas'
+				? placas.length > 0
+				: products.length > 0;
+
+const useContain =
+	category.slug === 'llaveros' || category.slug === 'placas-para-mascotas';
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead
+			title={`${category.title} | ${SITE_TITLE}`}
+			description={`Catálogo de ${category.title.toLowerCase()} — ${SITE_TITLE}`}
+		/>
+	</head>
+
+	<body>
+		<Header />
+
+		<main>
+			<div class="catalog">
+				<a href="/" class="catalog-back">← Inicio</a>
+				<h1 class="catalog-title">{category.title}</h1>
+
+				{hasItems ? (
+					<div class="product-grid">
+						{category.slug === 'llaveros' &&
+							llaveros.map((item) => (
+								<a href={`/llavero/${item.num}/`} class="product-card">
+									<div class={`product-card__image${useContain ? ' product-card__image--contain' : ''}`}>
+										<img src={item.image} alt={item.title} loading="lazy" />
+									</div>
+									<h2 class="product-card__title">{item.title}</h2>
+								</a>
+							))}
+
+						{category.slug === 'placas-para-mascotas' &&
+							placas.map((item) => (
+								<a href={`/placa/${item.num}/`} class="product-card">
+									<div class={`product-card__image${useContain ? ' product-card__image--contain' : ''}`}>
+										<img src={item.image} alt={item.title} loading="lazy" />
+									</div>
+									<h2 class="product-card__title">{item.title}</h2>
+								</a>
+							))}
+
+						{category.slug === 'decoracion-3d' &&
+							decoThemes.map((theme) => (
+								<a href={`/deco/${theme.slug}/`} class="product-card">
+									<div class="product-card__image">
+										{theme.cover && (
+											<img src={theme.cover} alt={theme.title} loading="lazy" />
+										)}
+									</div>
+									<h2 class="product-card__title">{theme.title}</h2>
+								</a>
+							))}
+
+						{category.slug !== 'llaveros' &&
+							category.slug !== 'decoracion-3d' &&
+							category.slug !== 'placas-para-mascotas' &&
+							products.map((item) => (
+								<a href={`/blog/${item.id}/`} class="product-card">
+									<div class="product-card__image">
+										{item.data.heroImage && (
+											<img src={item.data.heroImage} alt={item.data.title} loading="lazy" />
+										)}
+									</div>
+									<h2 class="product-card__title">{item.data.title}</h2>
+								</a>
+							))}
+					</div>
+				) : (
+					<p class="empty-msg">Pronto subiremos productos en esta categoría.</p>
+				)}
+			</div>
+		</main>
+
+		<Footer />
+	</body>
+</html>

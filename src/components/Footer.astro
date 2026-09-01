@@ -1,28 +1,35 @@
 ---
+import { SITE_TITLE } from '../consts';
+
 const today = new Date();
 ---
 
-<footer>
-	&copy; {today.getFullYear()} Maldonado Electricos SAS. All rights reserved.
+<footer class="footer">
+	<p>
+		&copy; {today.getFullYear()} {SITE_TITLE} ·
+		<a href="/contacto">Contacto</a>
+	</p>
 </footer>
+
 <style>
-	footer {
-		padding: 2em 1em 6em 1em;
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
-		color: rgb(var(--gray));
+	.footer {
+		padding: 2rem 1.25rem;
 		text-align: center;
+		border-top: 1px solid rgba(50, 75, 32, 0.08);
 	}
-	.social-links {
-		display: flex;
-		justify-content: center;
-		gap: 1em;
-		margin-top: 1em;
+
+	.footer p {
+		margin: 0;
+		font-size: 0.82rem;
+		color: #9ca3af;
 	}
-	.social-links a {
+
+	.footer a {
+		color: #b64f36;
 		text-decoration: none;
-		color: rgb(var(--gray));
 	}
-	.social-links a:hover {
-		color: rgb(var(--gray-dark));
+
+	.footer a:hover {
+		text-decoration: underline;
 	}
 </style>
